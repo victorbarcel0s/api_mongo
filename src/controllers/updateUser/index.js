@@ -11,6 +11,8 @@ async function updateUser(req, res) {
     if (req.body.occupation) objForUpdate.occupation = req.body.occupation
     if (req.body.age) objForUpdate.age = req.body.age
     if (req.body.hobbies) objForUpdate.hobbies = req.body.hobbies
+    if (req.body.password) objForUpdate.password = req.body.password
+
     try {
         db.client.connect()
 

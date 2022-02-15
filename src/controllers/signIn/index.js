@@ -1,0 +1,26 @@
+const jwt = require('jsonwebtoken')
+const db = require('../../database')
+
+const {
+    JWTSECRET
+} = process.env
+async function signIn(req, res) {
+    const username = req.body.username
+    const password = req.body.password
+
+    try {
+        db.client.connect()
+        const response = await db.userCollection.findOne({ 'username': username })
+        if (response.password == password) {
+            const token = jwt.sign({ username }, JWTSECRET, {
+                expiresIn: 900 // expira em 15min
+            });
+            return res.json({ auth: true, token: token });
+        } else
+            res.status(401).json("Unauthorized")
+
+    } catch (error) {
+        res.status(400).json(error.message)
+    }
+}
+module.exports = signIn

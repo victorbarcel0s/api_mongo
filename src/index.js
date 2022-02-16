@@ -4,16 +4,19 @@ const express = require('express')
 const users = require('./controllers/users')
 const signUp = require('./controllers/signUp')
 const signIn = require('./controllers/signIn')
-const post = require('./controllers/posts')
+const sendPost = require('./controllers/sendPost')
+const posts = require('./controllers/allPosts')
 const updateUser = require('./controllers/updateUser')
-
+const deletePost = require('./controllers/deletePost')
 
 const api = express()
 api.use(express.json())
 api.get('/users', users)
+api.get('/posts', posts)
+api.delete('/deletePost', JWT, deletePost)
 api.post('/signUp', signUp)
 api.post('/signIn', signIn)
-api.post('/post', JWT, post)
+api.post('/sendPost', JWT, sendPost)
 api.post('/updateUser', JWT, updateUser)
 
 port = 1500

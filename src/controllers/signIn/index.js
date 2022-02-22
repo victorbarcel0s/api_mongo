@@ -1,9 +1,19 @@
 const jwt = require('jsonwebtoken')
 const db = require('../../database')
 
+
+const crypto = require("crypto");
 const {
-    JWTSECRET
+    JWTSECRET,
+    CRYPTO_ALG,
+    CRYPTO_SECRET,
+    CRYPTO_TYPE
 } = process.env
+function descript(senha) {
+    const decipher = crypto.createDecipher(CRYPTO_ALG, CRYPTO_SECRET)
+    decipher.update(senha, CRYPTO_TYPE);
+    return decipher.final();
+}
 async function signIn(req, res) {
     const username = req.body.username
     const password = req.body.password
@@ -11,7 +21,7 @@ async function signIn(req, res) {
     try {
         db.client.connect()
         const response = await db.userCollection.findOne({ 'username': username })
-        if (response.password == password) {
+        if (descript(response.password) == password) {
             const token = jwt.sign({ username }, JWTSECRET, {
                 expiresIn: 900 // expira em 15min
             });

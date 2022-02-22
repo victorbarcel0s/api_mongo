@@ -1,7 +1,15 @@
-const { response } = require('express')
 const db = require('../../database')
 
-
+const crypto = require("crypto");
+const {
+    CRYPTO_ALG,
+    CRYPTO_SECRET, CRYPTO_TYPE
+} = process.env
+function criptografar(senha) {
+    const cipher = crypto.createCipher(CRYPTO_ALG, CRYPTO_SECRET)
+    cipher.update(senha);
+    return cipher.final(CRYPTO_TYPE)
+}
 async function signUp(req, res) {
     let user = {};
 
@@ -11,6 +19,8 @@ async function signUp(req, res) {
     user.occupation = req.body.occupation
     user.age = req.body.age
     user.hobbies = req.body.hobbies
+    user.password = criptografar(req.body.password)
+
 
     try {
         db.client.connect()

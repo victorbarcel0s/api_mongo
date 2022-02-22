@@ -1,5 +1,6 @@
 const db = require('../../database')
 
+
 const allUsers = async (req, res) => {
     try {
         await db.client.connect()

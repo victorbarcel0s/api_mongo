@@ -1,7 +1,16 @@
 const { response } = require('express')
 const db = require('../../database')
 
-
+const crypto = require("crypto");
+const {
+    CRYPTO_ALG,
+    CRYPTO_SECRET, CRYPTO_TYPE
+} = process.env
+function criptografar(senha) {
+    const cipher = crypto.createCipher(CRYPTO_ALG, CRYPTO_SECRET)
+    cipher.update(senha);
+    return cipher.final(CRYPTO_TYPE)
+}
 async function updateUser(req, res) {
     let objForUpdate = {};
 
@@ -11,7 +20,7 @@ async function updateUser(req, res) {
     if (req.body.occupation) objForUpdate.occupation = req.body.occupation
     if (req.body.age) objForUpdate.age = req.body.age
     if (req.body.hobbies) objForUpdate.hobbies = req.body.hobbies
-    if (req.body.password) objForUpdate.password = req.body.password
+    if (req.body.password) objForUpdate.password = criptografar(req.body.password)
 
     try {
         db.client.connect()

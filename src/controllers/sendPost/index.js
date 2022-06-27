@@ -8,7 +8,7 @@ async function post(req, res) {
         'content': content
     }
     try {
-        await db.client.connect()
+        
         const response = await db.postCollection.insertOne(post)
         res.status(200).json(response)
     } catch (error) {

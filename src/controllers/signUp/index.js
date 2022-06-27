@@ -23,7 +23,7 @@ async function signUp(req, res) {
 
 
     try {
-        db.client.connect()
+        
         await db.userCollection.insertOne(
             user
         )

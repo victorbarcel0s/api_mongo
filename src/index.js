@@ -8,6 +8,8 @@ const sendPost = require('./controllers/sendPost')
 const posts = require('./controllers/allPosts')
 const updateUser = require('./controllers/updateUser')
 const deletePost = require('./controllers/deletePost')
+const db = require('./database')
+db.client.connect()//conectando database
 
 const api = express()
 api.use(express.json())

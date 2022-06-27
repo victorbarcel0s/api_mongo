@@ -23,7 +23,7 @@ async function updateUser(req, res) {
     if (req.body.password) objForUpdate.password = criptografar(req.body.password)
 
     try {
-        db.client.connect()
+        
 
         await db.userCollection.updateOne({
             "_id": cpf

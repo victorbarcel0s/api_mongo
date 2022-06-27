@@ -7,7 +7,7 @@ async function deletePost(req, res) {
     const postId = req.body.postId
 
     try {
-        await db.client.connect()
+        
 
         const post = await db.postCollection.findOne({ _id: ObjectId(postId) })
         if (post.userId == userId) {

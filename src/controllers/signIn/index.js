@@ -19,7 +19,7 @@ async function signIn(req, res) {
     const password = req.body.password
 
     try {
-        db.client.connect()
+        
         const response = await db.userCollection.findOne({ 'username': username })
         if (descript(response.password) == password) {
             const token = jwt.sign({ username }, JWTSECRET, {
